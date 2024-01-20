@@ -1,0 +1,145 @@
+.MainContainer {
+    display: grid;
+    height: 95vh;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.MainLoginContainer {
+    -webkit-box-shadow: -15px 15px 18px 4px rgba(2, 2, 2, 0.2) inset;
+    -moz-box-shadow: -15px 15px 18px 4px rgba(2, 2, 2, 0.2) inset;
+    box-shadow: -15px 15px 18px 4px rgba(2, 2, 2, 0.2) inset;
+    height: 100%;
+    color: white;
+    display: flex;
+    background-color: yellow;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.MainLoginInputContainer {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 70%;
+    height: 40%;
+    padding: 5%;
+    -webkit-box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1);
+    -moz-box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1);
+    box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1);
+}
+
+.MainLoginInputContainerContainer {
+    display: block;
+    margin: 5%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.MainLoginButton {
+    border: none;
+    font-size: 1.5vw;
+    background-color: white;
+    color: yellow;
+}
+
+.MainLoginButton:hover {
+    cursor: pointer;
+}
+
+.MainLabelInput {
+    display: block;
+    font-size: 20px;
+}
+
+.MainLoginInput {
+    display: block;
+    border: none;
+    font-size: 1vw;
+    width: 100%;
+}
+
+.MainRegContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 5%;
+    background-color: white;
+}
+
+.MainRegInputContainer {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 70%;
+    height: 70%;
+    padding: 5%;
+    -webkit-box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1) inset;
+    -moz-box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1) inset;
+    box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1) inset;
+}
+
+.MainLoginInputReg {
+    display: block;
+    border: none;
+    width: 100%;
+    font-size: 1.2vw;
+    -webkit-box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1);
+    -moz-box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1);
+    box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1);
+}
+
+.MainRegButton {
+    border: 1px solid black;
+    font-size: 1.2vw;
+    background-color: transparent;
+    font-weight: 300;
+}
+
+.UserMainButton {
+    font-size: 2vw;
+    border: none;
+    margin: 2%;
+    background-color: yellow;
+    color: white;
+    padding: 1%;
+}
+
+.UserMainButton:hover {
+    cursor: pointer;
+}
+
+@media (max-width:430px) {
+    .MainContainer {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .MainLoginInputContainer {
+        width: 100%;
+        height: 100%;
+        padding: 10%;
+    }
+    .MainLoginInput {
+        font-size: 4.5vw;
+    }
+    .MainLoginButton {
+        font-size: 6vw;
+    }
+    .MainRegInputContainer {
+        width: 100%;
+        height: 100%;
+        box-shadow: none;
+    }
+    .MainLoginInputReg {
+        font-size: 4.5vw;
+    }
+    .MainRegButton {
+        font-size: 6vw;
+        border: none;
+        background-color: yellow;
+        color: white;
+    }
+}

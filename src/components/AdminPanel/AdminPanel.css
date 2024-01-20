@@ -1,0 +1,135 @@
+.adminContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.adminLoginContainer {
+    width: 20vw;
+    height: 40vh;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    display: grid;
+    background-color: yellow;
+    padding: 2%;
+    -webkit-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    -moz-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+}
+
+.adminLoginLabel {
+    display: block;
+    font-size: 1vw;
+    margin-bottom: -10%;
+}
+
+.adminLoginInput {
+    display: block;
+    width: 100%;
+    border: none;
+    height: 3vh;
+}
+
+.loginButton {
+    font-size: 1.4vw;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    color: yellow;
+    margin: 1%;
+}
+
+.adminListContainer {
+    width: 60vw;
+    height: 100%;
+    background-color: yellow;
+    padding: 2%;
+    -webkit-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    -moz-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+}
+
+.adminListLabel {
+    font-weight: 200;
+    display: block;
+    color: white;
+    font-size: 1.4vw;
+    margin-bottom: 1.2%;
+}
+
+.adminPanelContainer {
+    height: 25vh;
+    display: grid;
+    grid-template-rows: auto 1fr 1fr 1fr;
+    -webkit-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    -moz-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    padding: 2%;
+    color: white;
+}
+
+.adminListContainerCont {
+    -webkit-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    -moz-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    padding: 2%;
+}
+
+.adminPanelInput {
+    border: none;
+    height: 30px;
+}
+
+.adminPanelButton {
+    border: none;
+    color: yellow;
+    font-weight: bold;
+    font-size: 1vw;
+    background-color: white;
+    padding: 1%;
+}
+
+.adminPanelButton:hover {
+    cursor: pointer;
+}
+
+@media (max-width:430px) {
+    .adminContainer {
+        width: 100%;
+        height: 100%;
+    }
+    .adminLoginContainer {
+        width: 100%;
+        /*height: 100%;*/
+    }
+    .adminLoginLabel {
+        font-size: 4vw;
+    }
+    .adminLoginInput {
+        font-size: 4vw;
+    }
+    .loginButton {
+        font-size: 5vw;
+    }
+    .adminListContainer {
+        width: 100%;
+        box-shadow: none;
+    }
+    .adminListContainerCont {
+        box-shadow: none;
+        padding: 0;
+    }
+    .adminListLabel {
+        font-size: 5vw;
+    }
+    .adminLoginContainer {
+        box-shadow: none;
+    }
+    .adminPanelButton {
+        font-size: 4vw;
+    }
+}

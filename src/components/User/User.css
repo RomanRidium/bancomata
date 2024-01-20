@@ -1,0 +1,119 @@
+.UserMainContainer {
+    display: flex;
+    height: 90vh;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.UserMainButton {
+    font-size: 2vw;
+    border: none;
+    margin: 2%;
+    background-color: yellow;
+    color: white;
+    padding: 1%;
+}
+
+.UserMainButton:hover {
+    cursor: pointer;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 70vw;
+}
+
+.big-div {
+    grid-row: 1;
+    grid-column: span 2;
+    color: white;
+    padding: 2%;
+    background-color: yellow;
+    -webkit-box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1) inset;
+    -moz-box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1) inset;
+    box-shadow: -1px 3px 10px 11px rgba(2, 2, 2, 0.1) inset;
+}
+
+.small-div {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 3%;
+    background-color: yellow;
+    -webkit-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    -moz-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+}
+
+.small-div:hover {
+    cursor: pointer;
+    -webkit-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1);
+    -moz-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1);
+    box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1);
+}
+
+.labelUser {
+    color: black;
+    font-size: 1vw;
+}
+
+.userButton {
+    font-size: 1.2vw;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    color: yellow;
+    display: inline-block;
+    margin-right: 1%;
+}
+
+.userButton:hover {
+    cursor: pointer;
+}
+
+.userInput {
+    border: none;
+    margin-right: 1%;
+    height: 100%;
+    width: 50%;
+    display: inline-block;
+}
+
+@media (max-width:430px) {
+    .UserMainContainer {
+        width: 100%;
+        height: 100%;
+    }
+    .UserMainContainerInfo {
+        width: 100%;
+        height: 100%;
+    }
+    .container {
+        width: 100%;
+        height: 100%;
+        grid-template-rows:none;
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .labelUserInfo {
+        font-size: 5vw;
+    }
+    .labelUser {
+        font-size: 4vw;
+    }
+    .big-div {
+        grid-column: 1;
+    }
+    .userInput {
+        width: 50%;
+    }
+    .userButton {
+        margin: 1%;
+        font-size: 5vw;
+    }
+}

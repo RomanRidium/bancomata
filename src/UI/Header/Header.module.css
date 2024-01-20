@@ -1,0 +1,52 @@
+.HeaderContainer {
+    width: 100%;
+    height: 7vh;
+    background-color: yellow;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.logoutButton {
+    position: absolute;
+    font-size: 1vw;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    color: yellow;
+    right: 0;
+    margin-right: 5%;
+}
+
+.logoutButton:hover {
+    cursor: pointer;
+}
+
+.adminButton {
+    position: absolute;
+    font-size: 1vw;
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    left: 0;
+    margin-left: 5%;
+}
+
+.adminButton:hover {
+    cursor: pointer;
+}
+
+@media (max-width:430px) {
+    .HeaderLabel {
+        font-size: 5vw;
+    }
+    .adminButton {
+        font-size: 3vw;
+    }
+    .logoutButton {
+        font-size: 3vw;
+    }
+}
