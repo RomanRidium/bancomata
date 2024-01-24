@@ -30,7 +30,7 @@ export const getData = (arr) => {
 
 
 const totalDocRef = doc(db, "total", "ngKf3Rcp0So4fwXfuCLz");
-export const updateMyShetSubtract = async (user, value, totalAtm, totalAcc) => {
+export const updateMyShetSubtract = async (user, value, totalAtm, totalAcc, billsCount) => {
     if (totalAcc[0] === 0
         || totalAcc[0] === undefined
         || totalAcc[0] === null
@@ -43,10 +43,30 @@ export const updateMyShetSubtract = async (user, value, totalAtm, totalAcc) => {
             value: Number(totalAcc[0].value) - Number(value),
         });
     }
-    await updateDoc(totalDocRef, {total: Number(totalAtm[0].total) - Number(value)})
+    if (Number(totalAtm[0].id_50) < Number(billsCount.id_50) ||
+        Number(totalAtm[0].id_100) < Number(billsCount.id_100) ||
+        Number(totalAtm[0].id_200) < Number(billsCount.id_200) ||
+        Number(totalAtm[0].id_500) < Number(billsCount.id_500) ||
+        Number(totalAtm[0].id_1000) < Number(billsCount.id_1000) ||
+        Number(totalAtm[0].id_2000) < Number(billsCount.id_2000) ||
+        Number(totalAtm[0].id_5000) < Number(billsCount.id_5000))
+    {
+        toast.warn("В банкомате недостаточно купюр :(")
+    } else {
+        await updateDoc(totalDocRef, {
+            total: Number(totalAtm[0].total) - Number(value),
+            id_50: Number(totalAtm[0].id_50) - Number(billsCount.id_50),
+            id_100: Number(totalAtm[0].id_100) - Number(billsCount.id_100),
+            id_200: Number(totalAtm[0].id_200) - Number(billsCount.id_200),
+            id_500: Number(totalAtm[0].id_500) - Number(billsCount.id_500),
+            id_1000: Number(totalAtm[0].id_1000) - Number(billsCount.id_1000),
+            id_2000: Number(totalAtm[0].id_2000) - Number(billsCount.id_2000),
+            id_5000: Number(totalAtm[0].id_5000) - Number(billsCount.id_5000),
+        })
+    }
 }
 
-export const updateMyShetAdd = async (user, value, totalAtm, totalAcc) => {
+export const updateMyShetAdd = async (user, value, totalAtm, totalAcc, billsCount) => {
     if (Number(totalAcc[0]) === 0 || totalAcc[0] === undefined || totalAcc[0] === null) {
         await setDoc(doc(db, user.uid, "LA"), {
             value: Number(value),
@@ -56,7 +76,16 @@ export const updateMyShetAdd = async (user, value, totalAtm, totalAcc) => {
             value: Number(totalAcc[0].value) + Number(value),
         });
     }
-    await updateDoc(totalDocRef, {total: Number(totalAtm[0].total) + Number(value)})
+    await updateDoc(totalDocRef, {
+        total: Number(totalAtm[0].total) + Number(value),
+        id_50: Number(totalAtm[0].id_50) + Number(billsCount.id_50),
+        id_100: Number(totalAtm[0].id_100) + Number(billsCount.id_100),
+        id_200: Number(totalAtm[0].id_200) + Number(billsCount.id_200),
+        id_500: Number(totalAtm[0].id_500) + Number(billsCount.id_500),
+        id_1000: Number(totalAtm[0].id_1000) + Number(billsCount.id_1000),
+        id_2000: Number(totalAtm[0].id_2000) + Number(billsCount.id_2000),
+        id_5000: Number(totalAtm[0].id_5000) + Number(billsCount.id_5000),
+    })
 }
 
 export const goTransReducer = async (uid, value, totalAcc, cUid) => {

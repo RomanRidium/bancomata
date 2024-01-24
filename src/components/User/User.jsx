@@ -5,7 +5,7 @@ import Header from "../../UI/Header/Header";
 import "./User.css"
 import {db} from "../../firebase/firebase";
 import {getData, goTransReducer, updateMyShetAdd, updateMyShetSubtract} from "../../store/totalReducer/totalReducer";
-import { collection, getDocs, doc, getDoc} from "firebase/firestore";
+import { collection, getDocs} from "firebase/firestore";
 import {getDatas} from "../../store/totalAccReducer/totalAccReducer";
 import {setLogs, setLogsTransaction} from "../../store/logsReducer/logsReducer";
 const User = () => {
@@ -15,23 +15,60 @@ const User = () => {
     const [uid, setUid] = useState()
     const [transValue, setTransValue] = useState()
 
-    const [mySchetAdd, setMyShetAdd] = useState()
+    const [counter, setCounter] = useState(0);
+    const [billsCount, setBillsCount] = useState({
+        id_50: 0,
+        id_100: 0,
+        id_200: 0,
+        id_500: 0,
+        id_1000: 0,
+        id_2000: 0,
+        id_5000: 0,
+    });
+
+    const [counterSub, setCounterSub] = useState(0);
+    const [billsCountSub, setBillsCountSub] = useState({
+        id_50: 0,
+        id_100: 0,
+        id_200: 0,
+        id_500: 0,
+        id_1000: 0,
+        id_2000: 0,
+        id_5000: 0,
+    });
 
     const updateMyShetAddBtn = async () => {
-        await updateMyShetAdd(currentUser, mySchetAdd, totalAtm, accTotal)
-        await setLogs("Внесение наличных", currentUser.uid, Date.now(), mySchetAdd, currentUser.displayName)
-        setMyShetAdd(0)
+        await updateMyShetAdd(currentUser, counter, totalAtm, accTotal, billsCount)
+        await setLogs("Внесение наличных", currentUser.uid, Date.now(), counter, currentUser.displayName)
+        setCounter(0)
+        setBillsCount({
+            id_50: 0,
+            id_100: 0,
+            id_200: 0,
+            id_500: 0,
+            id_1000: 0,
+            id_2000: 0,
+            id_5000: 0,
+        })
     }
-    const [mySchetSub, setMyShetSub] = useState()
     const updateMyShetSubtractBtn = async () => {
-        if (Number(accTotal[0].value) < Number(mySchetSub)
-            || Number(totalAtm[0].total) < Number(mySchetSub)
+        if (Number(accTotal[0].value) < Number(counterSub)
+            || Number(totalAtm[0].total) < Number(counterSub)
         ) {
             toast.warn("Недостаточно средств!")
         } else {
-            await updateMyShetSubtract(currentUser, mySchetSub, totalAtm, accTotal)
-            await setLogs("Снятие наличных", currentUser.uid, Date.now(), mySchetSub, currentUser.displayName)
-            setMyShetSub(0)
+            await updateMyShetSubtract(currentUser, counterSub, totalAtm, accTotal, billsCountSub)
+            await setLogs("Снятие наличных", currentUser.uid, Date.now(), counterSub, currentUser.displayName)
+            setCounterSub(0)
+            setBillsCountSub({
+                id_50: 0,
+                id_100: 0,
+                id_200: 0,
+                id_500: 0,
+                id_1000: 0,
+                id_2000: 0,
+                id_5000: 0,
+            })
         }
     }
 
@@ -40,14 +77,14 @@ const User = () => {
     useEffect(() => {
         getDocs(collection(db, currentUser.uid))
             .then((res) => dispatchTotalAcc(getDatas((res.docs.map(el => ({ ...el.data(), id: el.id }))))))
-    }, [dispatchTotalAcc, mySchetAdd, mySchetSub, transValue, uid])
+    }, [dispatchTotalAcc, counter, counterSub, transValue, uid])
 
     const totalAtm = useSelector(state => state.total.total)
     const dispatchProduct = useDispatch()
     useEffect(() => {
         getDocs(collection(db, 'total'))
             .then((res) => dispatchProduct(getData((res.docs.map(el => ({ ...el.data(), id: el.id }))))))
-    }, [dispatchProduct, mySchetAdd, mySchetSub, transValue, uid])
+    }, [dispatchProduct, counter, counterSub, transValue, uid])
 
     const [goAdd, setGoAdd] = useState(0)
     const [goSub, setGoSub] = useState(0)
@@ -56,7 +93,7 @@ const User = () => {
     const [visibleTotal, setVisibleTotal] = useState(0)
     useEffect(() => {
         setVisibleTotal(accTotal.map(f => f.value))
-    }, [accTotal, mySchetAdd, mySchetSub])
+    }, [accTotal, counter, counterSub])
 
     const goTransF = async () => {
         if (Number(accTotal[0].value) < Number(transValue)) {
@@ -67,6 +104,22 @@ const User = () => {
             setTransValue(0)
         }
     }
+
+    const handleButtonClick = (value, selectedId) => {
+        setCounter(counter + value);
+        setBillsCount({
+            ...billsCount,
+            [selectedId]: billsCount[selectedId] + 1,
+        });
+    };
+
+    const handleButtonClickSub = (value, selectedId) => {
+        setCounterSub(counterSub + value);
+        setBillsCountSub({
+            ...billsCountSub,
+            [selectedId]: billsCountSub[selectedId] + 1,
+        });
+    };
 
     return (
         <div>
@@ -91,12 +144,14 @@ const User = () => {
                                 ?
                                     (
                                         <div style={{width: "100%", height: "100%"}}>
-                                            <input
-                                                value={mySchetAdd}
-                                                placeholder="Введите сумму в рублях"
-                                                className="userInput"
-                                                onChange={(e) => setMyShetAdd(e.target.value)}
-                                            />
+                                            <p>Текущая сумма: {counter}₽</p>
+                                            <button className="valueButton" onClick={() => handleButtonClick(50, 'id_50')}>50</button>
+                                            <button className="valueButton" onClick={() => handleButtonClick(100, 'id_100')}>100</button>
+                                            <button className="valueButton" onClick={() => handleButtonClick(200, 'id_200')}>200</button>
+                                            <button className="valueButton" onClick={() => handleButtonClick(500, 'id_500')}>500</button>
+                                            <button className="valueButton" onClick={() => handleButtonClick(1000, 'id_1000')}>1000</button>
+                                            <button className="valueButton" onClick={() => handleButtonClick(2000, 'id_2000')}>2000</button>
+                                            <button className="valueButton" onClick={() => handleButtonClick(5000, 'id_5000')}>5000</button>
                                             <button className="userButton" onClick={updateMyShetAddBtn}>Внести</button>
                                             <button className="userButton" onClick={() => setGoAdd(0)}>Назад</button>
                                         </div>
@@ -115,12 +170,14 @@ const User = () => {
                                     ?
                                     (
                                         <div style={{width: "100%", height: "100%"}}>
-                                            <input
-                                                value={mySchetSub}
-                                                placeholder="Введите сумму в рублях"
-                                                className="userInput"
-                                                onChange={(e) => setMyShetSub(e.target.value)}
-                                            />
+                                            <p>Текущая сумма: -{counterSub}₽</p>
+                                            <button className="valueButton" onClick={() => handleButtonClickSub(50, 'id_50')}>50</button>
+                                            <button className="valueButton" onClick={() => handleButtonClickSub(100, 'id_100')}>100</button>
+                                            <button className="valueButton" onClick={() => handleButtonClickSub(200, 'id_200')}>200</button>
+                                            <button className="valueButton" onClick={() => handleButtonClickSub(500, 'id_500')}>500</button>
+                                            <button className="valueButton" onClick={() => handleButtonClickSub(1000, 'id_1000')}>1000</button>
+                                            <button className="valueButton" onClick={() => handleButtonClickSub(2000, 'id_2000')}>2000</button>
+                                            <button className="valueButton" onClick={() => handleButtonClickSub(5000, 'id_5000')}>5000</button>
                                             <button className="userButton" onClick={updateMyShetSubtractBtn}>Снять</button>
                                             <button className="userButton" onClick={() => setGoSub(0)}>Назад</button>
                                         </div>

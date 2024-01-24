@@ -62,9 +62,8 @@
 }
 
 .adminPanelContainer {
-    height: 25vh;
+    height: auto;
     display: grid;
-    grid-template-rows: auto 1fr 1fr 1fr;
     -webkit-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
     -moz-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
     box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
@@ -85,16 +84,34 @@
 }
 
 .adminPanelButton {
-    border: none;
     color: yellow;
     font-weight: bold;
     font-size: 1vw;
     background-color: white;
     padding: 1%;
+    border: 1px solid yellow;
 }
 
 .adminPanelButton:hover {
     cursor: pointer;
+}
+
+.valueButton {
+    border: 1px solid yellow;
+    background: white;
+    padding: 1%;
+    color: yellow;
+}
+
+.valueButton:hover {
+    cursor: pointer;
+}
+
+.addPanel {
+    padding: 2%;
+    -webkit-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    -moz-box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
+    box-shadow: -1px 3px 10px 5px rgba(2, 2, 2, 0.1) inset;
 }
 
 @media (max-width:430px) {
