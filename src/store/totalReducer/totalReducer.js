@@ -1,4 +1,4 @@
-import {doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
+import {doc, getDoc, updateDoc} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import {toast} from "react-toastify";
 
@@ -39,7 +39,7 @@ export const updateMyShetSubtract = async (user, value, totalAtm, totalAcc, bill
     ) {
         toast.warn("Недостаточно средств!")
     } else {
-        await setDoc(doc(db, user.uid, "LA"), {
+        await updateDoc(doc(db, user.uid, "LA"), {
             value: Number(totalAcc[0].value) - Number(value),
         });
     }
@@ -68,11 +68,11 @@ export const updateMyShetSubtract = async (user, value, totalAtm, totalAcc, bill
 
 export const updateMyShetAdd = async (user, value, totalAtm, totalAcc, billsCount) => {
     if (Number(totalAcc[0]) === 0 || totalAcc[0] === undefined || totalAcc[0] === null) {
-        await setDoc(doc(db, user.uid, "LA"), {
+        await updateDoc(doc(db, user.uid, "LA"), {
             value: Number(value),
         });
     } else {
-        await setDoc(doc(db, user.uid, "LA"), {
+        await updateDoc(doc(db, user.uid, "LA"), {
             value: Number(totalAcc[0].value) + Number(value),
         });
     }
@@ -90,9 +90,10 @@ export const updateMyShetAdd = async (user, value, totalAtm, totalAcc, billsCoun
 
 export const goTransReducer = async (uid, value, totalAcc, cUid) => {
 
-    await getDoc(doc(db, "4BMlvbTuRCMYd6yYxnMIO8CiEu03", "LA")).then(docSnap => {
+    await getDoc(doc(db, uid, "LA")).then(docSnap => {
         if (docSnap.exists()) {
-            setDoc(doc(db, uid, "LA"), {
+            console.log(docSnap.data())
+            updateDoc(doc(db, uid, "LA"), {
                 value: Number(docSnap.data().value) + Number(value),
             });
         } else {
@@ -100,7 +101,13 @@ export const goTransReducer = async (uid, value, totalAcc, cUid) => {
         }
     })
 
-    await setDoc(doc(db, cUid, "LA"), {
+    await updateDoc(doc(db, cUid, "LA"), {
         value: Number(totalAcc[0].value) - Number(value),
+    });
+}
+
+export const passValid = async (cUid, code) => {
+    await updateDoc(doc(db, cUid, "LA"), {
+        code: code,
     });
 }

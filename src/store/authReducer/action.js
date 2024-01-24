@@ -1,6 +1,7 @@
 import * as types from "./actionTypes"
-import { auth } from "../../firebase/firebase"
+import {auth, db} from "../../firebase/firebase"
 import { toast } from "react-toastify";
+import {doc, setDoc} from "firebase/firestore";
 
 const registerStart = () => ({
     type: types.REGISTER_START
@@ -25,6 +26,9 @@ export const registerInitiate = (email, password, displayName) => {
             })
             dispatch(registerSucess(user))
             toast.success(`Здравствуйте, ${email}`)
+            setDoc(doc(db, user.uid, "LA"), {
+                value: 0,
+            });
         }).catch(error => dispatch(registerFail(error.message) && toast.warning(`Что-то пошло не так, возможно такая учетная запись уже существует`)))
     }
 }

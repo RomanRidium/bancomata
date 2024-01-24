@@ -8,6 +8,7 @@ import {getData, goTransReducer, updateMyShetAdd, updateMyShetSubtract} from "..
 import { collection, getDocs} from "firebase/firestore";
 import {getDatas} from "../../store/totalAccReducer/totalAccReducer";
 import {setLogs, setLogsTransaction} from "../../store/logsReducer/logsReducer";
+import FourDigitCodePanel from "../../UI/FourDigitCodePanel/FourDigitCodePanel";
 const User = () => {
 
     const { currentUser } = useSelector(state => state.auth)
@@ -121,110 +122,159 @@ const User = () => {
         });
     };
 
+    const [code, setCode] = useState('');
+    const [checkCode, setCheckCode] = useState(1)
+    const [valid, setValid] = useState(1)
+    useEffect(() => {
+        if (accTotal[0] !== undefined && accTotal[0] !== null && accTotal[0] !== []) {
+            if (accTotal[0].code === undefined) {
+                setCheckCode(1)
+            } else {
+                setCheckCode(0)
+            }
+        }
+    }, [accTotal])
+
     return (
         <div>
             <ToastContainer/>
             <Header/>
-            <div className="UserMainContainer">
-                <div className="UserMainContainerInfo">
-                    <div className="container">
-                        <div className="big-div">
-                            <label className="labelUser">Имя</label>
-                            <h1 className="labelUserInfo">{currentUser.displayName}</h1>
-                            <label className="labelUser">E-mail</label>
-                            <h1 className="labelUserInfo">{currentUser.email}</h1>
-                            <label className="labelUser">Баланс</label>
-                            <h1 className="labelUserInfo">{visibleTotal}₽</h1>
-                            <label className="labelUser">Ваш ID</label>
-                            <h1 className="labelUserInfo">{currentUser.uid}</h1>
-                        </div>
-                        <div className="small-div">
+            {
+                valid
+                ?
+                    (
+                        <div className="UserCodePanelContainer">
                             {
-                                goAdd
+                                checkCode
                                 ?
                                     (
-                                        <div style={{width: "100%", height: "100%"}}>
-                                            <p>Текущая сумма: {counter}₽</p>
-                                            <button className="valueButton" onClick={() => handleButtonClick(50, 'id_50')}>50</button>
-                                            <button className="valueButton" onClick={() => handleButtonClick(100, 'id_100')}>100</button>
-                                            <button className="valueButton" onClick={() => handleButtonClick(200, 'id_200')}>200</button>
-                                            <button className="valueButton" onClick={() => handleButtonClick(500, 'id_500')}>500</button>
-                                            <button className="valueButton" onClick={() => handleButtonClick(1000, 'id_1000')}>1000</button>
-                                            <button className="valueButton" onClick={() => handleButtonClick(2000, 'id_2000')}>2000</button>
-                                            <button className="valueButton" onClick={() => handleButtonClick(5000, 'id_5000')}>5000</button>
-                                            <button className="userButton" onClick={updateMyShetAddBtn}>Внести</button>
-                                            <button className="userButton" onClick={() => setGoAdd(0)}>Назад</button>
-                                        </div>
+                                        <FourDigitCodePanel
+                                            code={code}
+                                            setCode={setCode}
+                                            checkCode={0}
+                                            accTotal={accTotal}
+                                            setValid={setValid}
+                                            currentUser={currentUser}
+                                        />
                                     )
                                     :
                                     (
-                                        <div onClick={() => setGoAdd(1)} style={{width: "100%", height: "100%"}}>
-                                            <label className="labelUser">Внести средства</label>
-                                        </div>
+                                        <FourDigitCodePanel
+                                            code={code}
+                                            setCode={setCode}
+                                            checkCode={1}
+                                            accTotal={accTotal}
+                                            setValid={setValid}
+                                            currentUser={currentUser}
+                                        />
                                     )
                             }
                         </div>
-                        <div className="small-div">
-                            {
-                                goSub
-                                    ?
-                                    (
-                                        <div style={{width: "100%", height: "100%"}}>
-                                            <p>Текущая сумма: -{counterSub}₽</p>
-                                            <button className="valueButton" onClick={() => handleButtonClickSub(50, 'id_50')}>50</button>
-                                            <button className="valueButton" onClick={() => handleButtonClickSub(100, 'id_100')}>100</button>
-                                            <button className="valueButton" onClick={() => handleButtonClickSub(200, 'id_200')}>200</button>
-                                            <button className="valueButton" onClick={() => handleButtonClickSub(500, 'id_500')}>500</button>
-                                            <button className="valueButton" onClick={() => handleButtonClickSub(1000, 'id_1000')}>1000</button>
-                                            <button className="valueButton" onClick={() => handleButtonClickSub(2000, 'id_2000')}>2000</button>
-                                            <button className="valueButton" onClick={() => handleButtonClickSub(5000, 'id_5000')}>5000</button>
-                                            <button className="userButton" onClick={updateMyShetSubtractBtn}>Снять</button>
-                                            <button className="userButton" onClick={() => setGoSub(0)}>Назад</button>
-                                        </div>
-                                    )
-                                    :
-                                    (
-                                        <div onClick={() => setGoSub(1)} style={{width: "100%", height: "100%"}}>
-                                            <label className="labelUser">Снять средства</label>
-                                        </div>
-                                    )
-                            }
+                    )
+                    :
+                    (
+                        <div className="UserMainContainer">
+                            <div className="UserMainContainerInfo">
+                                <div className="container">
+                                    <div className="big-div">
+                                        <label className="labelUser">Имя</label>
+                                        <h1 className="labelUserInfo">{currentUser.displayName}</h1>
+                                        <label className="labelUser">E-mail</label>
+                                        <h1 className="labelUserInfo">{currentUser.email}</h1>
+                                        <label className="labelUser">Баланс</label>
+                                        <h1 className="labelUserInfo">{visibleTotal}₽</h1>
+                                        <label className="labelUser">Ваш ID</label>
+                                        <h1 className="labelUserInfo">{currentUser.uid}</h1>
+                                    </div>
+                                    <div className="small-div">
+                                        {
+                                            goAdd
+                                                ?
+                                                (
+                                                    <div style={{width: "100%", height: "100%"}}>
+                                                        <p>Текущая сумма: {counter}₽</p>
+                                                        <button className="valueButton" onClick={() => handleButtonClick(50, 'id_50')}>50</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClick(100, 'id_100')}>100</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClick(200, 'id_200')}>200</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClick(500, 'id_500')}>500</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClick(1000, 'id_1000')}>1000</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClick(2000, 'id_2000')}>2000</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClick(5000, 'id_5000')}>5000</button>
+                                                        <button className="userButton" onClick={updateMyShetAddBtn}>Внести</button>
+                                                        <button className="userButton" onClick={() => setGoAdd(0)}>Назад</button>
+                                                    </div>
+                                                )
+                                                :
+                                                (
+                                                    <div onClick={() => setGoAdd(1)} style={{width: "100%", height: "100%"}}>
+                                                        <label className="labelUser">Внести средства</label>
+                                                    </div>
+                                                )
+                                        }
+                                    </div>
+                                    <div className="small-div">
+                                        {
+                                            goSub
+                                                ?
+                                                (
+                                                    <div style={{width: "100%", height: "100%"}}>
+                                                        <p>Текущая сумма: -{counterSub}₽</p>
+                                                        <button className="valueButton" onClick={() => handleButtonClickSub(50, 'id_50')}>50</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClickSub(100, 'id_100')}>100</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClickSub(200, 'id_200')}>200</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClickSub(500, 'id_500')}>500</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClickSub(1000, 'id_1000')}>1000</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClickSub(2000, 'id_2000')}>2000</button>
+                                                        <button className="valueButton" onClick={() => handleButtonClickSub(5000, 'id_5000')}>5000</button>
+                                                        <button className="userButton" onClick={updateMyShetSubtractBtn}>Снять</button>
+                                                        <button className="userButton" onClick={() => setGoSub(0)}>Назад</button>
+                                                    </div>
+                                                )
+                                                :
+                                                (
+                                                    <div onClick={() => setGoSub(1)} style={{width: "100%", height: "100%"}}>
+                                                        <label className="labelUser">Снять средства</label>
+                                                    </div>
+                                                )
+                                        }
+                                    </div>
+                                    <div className="small-div" style={{width: "100%", height: "100%"}}>
+                                        {
+                                            goTrans
+                                                ?
+                                                (
+                                                    <div style={{width: "100%"}}>
+                                                        <input
+                                                            value={uid}
+                                                            placeholder="Введите id пользователя"
+                                                            className="userInput"
+                                                            style={{width: "35%"}}
+                                                            onChange={(e) => setUid(e.target.value)}
+                                                        />
+                                                        <input
+                                                            value={transValue}
+                                                            placeholder="Введите сумму в рублях"
+                                                            className="userInput"
+                                                            style={{width: "35%"}}
+                                                            onChange={(e) => setTransValue(e.target.value)}
+                                                        />
+                                                        <button className="userButton" onClick={goTransF}>Перевести</button>
+                                                        <button className="userButton" onClick={() => setGoTrans(0)}>Назад</button>
+                                                    </div>
+                                                )
+                                                :
+                                                (
+                                                    <div onClick={() => setGoTrans(1)} style={{width: "100%", height: "100%"}}>
+                                                        <label className="labelUser">Со счёта на счёт</label>
+                                                    </div>
+                                                )
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="small-div" style={{width: "100%"}}>
-                            {
-                                goTrans
-                                    ?
-                                    (
-                                        <div style={{width: "100%", height: "100%"}}>
-                                            <input
-                                                value={uid}
-                                                placeholder="Введите id пользователя"
-                                                className="userInput"
-                                                style={{width: "35%"}}
-                                                onChange={(e) => setUid(e.target.value)}
-                                            />
-                                            <input
-                                                value={transValue}
-                                                placeholder="Введите сумму в рублях"
-                                                className="userInput"
-                                                style={{width: "35%"}}
-                                                onChange={(e) => setTransValue(e.target.value)}
-                                            />
-                                            <button className="userButton" onClick={goTransF}>Перевести</button>
-                                            <button className="userButton" onClick={() => setGoTrans(0)}>Назад</button>
-                                        </div>
-                                    )
-                                    :
-                                    (
-                                        <div onClick={() => setGoTrans(1)} style={{width: "100%", height: "100%"}}>
-                                            <label className="labelUser">Со счёта на счёт</label>
-                                        </div>
-                                    )
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    )
+            }
         </div>
     );
 };

@@ -1,0 +1,46 @@
+.container {
+    width: 20%;
+    text-align: center;
+    margin: 10%;
+}
+
+.display {
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.buttonContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.digitButton {
+    padding: 15px;
+    font-size: 18px;
+    background: yellow;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deleteButton {
+    padding: 15px;
+    font-size: 18px;
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+@media (max-width:430px) {
+    .container {
+        width: 100%;
+    }
+}
