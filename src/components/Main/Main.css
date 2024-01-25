@@ -2,6 +2,7 @@
     display: grid;
     height: 95vh;
     grid-template-columns: repeat(2, 1fr);
+    text-shadow: 1px 0 1px #000;
 }
 
 .MainLoginContainer {

@@ -248,14 +248,14 @@ const User = () => {
                                                             value={uid}
                                                             placeholder="Введите id пользователя"
                                                             className="userInput"
-                                                            style={{width: "35%"}}
+                                                            style={{width: "100%", margin: "1%"}}
                                                             onChange={(e) => setUid(e.target.value)}
                                                         />
                                                         <input
                                                             value={transValue}
                                                             placeholder="Введите сумму в рублях"
                                                             className="userInput"
-                                                            style={{width: "35%"}}
+                                                            style={{width: "100%", margin: "1%"}}
                                                             onChange={(e) => setTransValue(e.target.value)}
                                                         />
                                                         <button className="userButton" onClick={goTransF}>Перевести</button>

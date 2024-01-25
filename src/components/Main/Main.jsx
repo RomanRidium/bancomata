@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import "./Main.css"
-import { loginInitiate, logoutInitiate, registerInitiate } from "../../store/authReducer/action";
+import { loginInitiate, registerInitiate } from "../../store/authReducer/action";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Header from "../../UI/Header/Header";
-import {useHistory} from "react-router-dom";
-import {setLogsAcc, setLogsAccLogin, setLogsAccReg} from "../../store/logsReducer/logsReducer";
+import {setLogsAccLogin, setLogsAccReg} from "../../store/logsReducer/logsReducer";
 
 const Main = () => {
 
@@ -16,7 +15,6 @@ const Main = () => {
     const [truePass, setTruePass] = useState("")
 
     const dispatch = useDispatch()
-    const { currentUser } = useSelector(state => state.auth)
 
     const goRegistr = async (e) => {
         e.preventDefault()
