@@ -36,23 +36,19 @@ export const updateMyShetSubtract = async (user, value, totalAtm, totalAcc, bill
         || totalAcc[0] === null
         || Number(totalAcc[0].value) < Number(value)
         || Number(totalAtm[0].total) < Number(value)
-    ) {
-        toast.warn("Недостаточно средств!")
-    } else {
-        await updateDoc(doc(db, user.uid, "LA"), {
-            value: Number(totalAcc[0].value) - Number(value),
-        });
-    }
-    if (Number(totalAtm[0].id_50) < Number(billsCount.id_50) ||
+        || Number(totalAtm[0].id_50) < Number(billsCount.id_50) ||
         Number(totalAtm[0].id_100) < Number(billsCount.id_100) ||
         Number(totalAtm[0].id_200) < Number(billsCount.id_200) ||
         Number(totalAtm[0].id_500) < Number(billsCount.id_500) ||
         Number(totalAtm[0].id_1000) < Number(billsCount.id_1000) ||
         Number(totalAtm[0].id_2000) < Number(billsCount.id_2000) ||
-        Number(totalAtm[0].id_5000) < Number(billsCount.id_5000))
-    {
-        toast.warn("В банкомате недостаточно купюр :(")
+        Number(totalAtm[0].id_5000) < Number(billsCount.id_5000)
+    ) {
+        toast.warn("Недостаточно средств! Или в банкомате недостаточно купюр :(")
     } else {
+        await updateDoc(doc(db, user.uid, "LA"), {
+            value: Number(totalAcc[0].value) - Number(value),
+        });
         await updateDoc(totalDocRef, {
             total: Number(totalAtm[0].total) - Number(value),
             id_50: Number(totalAtm[0].id_50) - Number(billsCount.id_50),
